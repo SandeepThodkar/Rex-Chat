@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import LandingPage from './LandingPage';
+import ChatComponent from './ChatComponent'; // Assuming ChatComponent will be created later
+import '../styles/App.css'; // Adjust the path as per your project structure
 
 function App() {
+  const [showChat, setShowChat] = useState(false);
+
+  const handleStartChat = () => {
+    setShowChat(true);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!showChat ? (
+        <LandingPage onStartChat={handleStartChat} />
+      ) : (
+        <ChatComponent />
+      )}
     </div>
   );
 }
