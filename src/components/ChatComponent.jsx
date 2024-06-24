@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/ChatComponent.css'; // Adjust the import path
 
-const ChatComponent = () => {
+const ChatComponent = ({ setShowChat }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+
+  // Load chat history from localStorage when the component mounts
+  useEffect(() => {
+    const savedSession = localStorage.getItem('chatSession');
+    if (savedSession) {
+      setMessages(JSON.parse(savedSession));
+    }
+  }, []);
+
+  // Save chat history to localStorage whenever messages change
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem('chatSession', JSON.stringify(messages));
+    }
+  }, [messages]);
 
   const fetchChatResponse = async (input) => {
     try {
@@ -40,6 +55,12 @@ const ChatComponent = () => {
     setMessages((prevMessages) => [...prevMessages, aiMessage]);
   };
 
+  const handleEndChat = () => {
+    setMessages([]);
+    localStorage.removeItem('chatSession');
+    setShowChat(false); // Return to landing page
+  };
+
   return (
     <div className="chat-container">
       <div className="messages">
@@ -58,6 +79,7 @@ const ChatComponent = () => {
         />
         <button type="submit">Send</button>
       </form>
+      <button onClick={handleEndChat}>End Chat</button>
     </div>
   );
 };

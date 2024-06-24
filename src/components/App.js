@@ -15,7 +15,7 @@ function App() {
       {!showChat ? (
         <LandingPage onStartChat={handleStartChat} />
       ) : (
-        <ChatComponent />
+        <ChatComponent setShowChat={setShowChat} />
       )}
     </div>
   );
