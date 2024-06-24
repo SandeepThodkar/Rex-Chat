@@ -1,56 +1,74 @@
+/* Chat container styling */
 .chat-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    max-width: 600px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
   }
   
+  /* Message list container */
   .messages {
     flex: 1;
-    padding: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
   }
   
+  /* Styling for both user and AI messages */
   .message {
-    padding: 10px 20px;
-    margin: 10px 0;
-    border-radius: 20px;
-    max-width: 60%;
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
     word-wrap: break-word;
   }
   
-  .outgoing {
-    background-color: #007bff;
-    color: white;
+  /* User message styling */
+  .user-message {
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text color */
     align-self: flex-end;
+    text-align: right;
   }
   
-  .incoming {
-    background-color: #e0e0e0;
+  /* AI message styling */
+  .ai-message {
+    background-color: #007bff; /* Same blue background as user message */
+    color: #fff; /* White text color */
     align-self: flex-start;
+    text-align: left;
   }
   
-  .message-input {
+  /* Message input form */
+  .message-form {
     display: flex;
-    padding: 10px;
     border-top: 1px solid #ccc;
+    padding: 10px;
   }
   
-  .message-input input {
+  .message-form input {
     flex: 1;
     padding: 10px;
-    font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 20px;
+    border-radius: 4px;
     margin-right: 10px;
   }
   
-  .message-input button {
+  .message-form button {
     padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
     border: none;
-    border-radius: 20px;
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text color */
+    border-radius: 4px;
     cursor: pointer;
+  }
+  
+  .message-form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
   }
   

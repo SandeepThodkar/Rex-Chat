@@ -1,82 +1,59 @@
 import React, { useState } from 'react';
-import '../styles/ChatComponent.css'; // Import your CSS file for styling
+import '../styles/ChatComponent.css'; // Adjust the import path
 
 const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
-  const [inputMessage, setInputMessage] = useState('');
+  const [input, setInput] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!inputMessage.trim()) return; // Do not send empty messages
-
-    // Add user's message to chat
-    setMessages([...messages, { text: inputMessage, fromUser: true }]);
-    const userMessage = inputMessage;
-    setInputMessage('');
-
-    // Fetch AI response
+  const fetchChatResponse = async (input) => {
     try {
-      const response = await fetchChatResponse(userMessage);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: response, fromUser: false },
-      ]);
-    } catch (error) {
-      console.error('Error fetching AI response:', error);
-      // Optionally, display an error message to the user
-    }
-  };
-
-  const fetchChatResponse = async (userMessage) => {
-    const apiKey = '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'; // Replace with your actual OpenAI API key
-    const endpoint = 'https://api.openai.com/v1/chat/completions';
-
-    try {
-      const response = await fetch(endpoint, {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`,
+          'Authorization': `Bearer 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`, // replace with your actual API key
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo', // Specify the model name
-          messages: [
-            { role: 'system', content: 'You are a helpful assistant.' },
-            { role: 'user', content: userMessage }
-          ],
-          max_tokens: 150,
+          model: 'gpt-3.5-turbo',
+          messages: [{ role: 'user', content: input }],
         }),
       });
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch AI response: ${response.status} ${response.statusText}`);
-      }
-
       const data = await response.json();
-      return data.choices[0].message.content.trim();
+      return data.choices[0].message.content;
     } catch (error) {
-      throw new Error('Failed to fetch AI response');
+      console.error('Error fetching AI response:', error);
+      return 'Error: Unable to fetch response.';
     }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (input.trim() === '') return;
+
+    const userMessage = { role: 'user', content: input };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+
+    setInput(''); // Clear input field immediately
+
+    const aiResponse = await fetchChatResponse(input);
+    const aiMessage = { role: 'assistant', content: aiResponse };
+    setMessages((prevMessages) => [...prevMessages, aiMessage]);
   };
 
   return (
     <div className="chat-container">
       <div className="messages">
         {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`message ${message.fromUser ? 'outgoing' : 'incoming'}`}
-          >
-            {message.text}
+          <div key={index} className={`message ${message.role === 'user' ? 'user-message' : 'ai-message'}`}>
+            {message.content}
           </div>
         ))}
       </div>
-      <form onSubmit={handleSubmit} className="message-input">
+      <form className="message-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message..."
         />
         <button type="submit">Send</button>
