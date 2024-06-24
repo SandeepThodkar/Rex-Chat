@@ -1,39 +1,62 @@
-import React, { useState, useEffect, useRef } from 'react';
-import '../styles/ChatComponent.css'; // Adjusted the path to point to the styles folder
+import React, { useState } from 'react';
+import '../styles/ChatComponent.css'; // Import your CSS file for styling
 
 const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const ws = useRef(null);
+  const [inputMessage, setInputMessage] = useState('');
 
-  useEffect(() => {
-    // Establish WebSocket connection
-    ws.current = new WebSocket('ws://your-websocket-url'); // Replace with your WebSocket URL
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    ws.current.onopen = () => {
-      console.log('WebSocket connection established');
-    };
+    if (!inputMessage.trim()) return; // Do not send empty messages
 
-    ws.current.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      setMessages((prevMessages) => [...prevMessages, { text: message.text, incoming: true }]);
-    };
+    // Add user's message to chat
+    setMessages([...messages, { text: inputMessage, fromUser: true }]);
+    const userMessage = inputMessage;
+    setInputMessage('');
 
-    ws.current.onclose = () => {
-      console.log('WebSocket connection closed');
-    };
+    // Fetch AI response
+    try {
+      const response = await fetchChatResponse(userMessage);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: response, fromUser: false },
+      ]);
+    } catch (error) {
+      console.error('Error fetching AI response:', error);
+      // Optionally, display an error message to the user
+    }
+  };
 
-    return () => {
-      ws.current.close();
-    };
-  }, []);
+  const fetchChatResponse = async (userMessage) => {
+    const apiKey = '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'; // Replace with your actual OpenAI API key
+    const endpoint = 'https://api.openai.com/v1/chat/completions';
 
-  const handleSendMessage = () => {
-    if (input.trim()) {
-      const message = { text: input, incoming: false };
-      setMessages((prevMessages) => [...prevMessages, message]);
-      ws.current.send(JSON.stringify(message));
-      setInput('');
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo', // Specify the model name
+          messages: [
+            { role: 'system', content: 'You are a helpful assistant.' },
+            { role: 'user', content: userMessage }
+          ],
+          max_tokens: 150,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch AI response: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.choices[0].message.content.trim();
+    } catch (error) {
+      throw new Error('Failed to fetch AI response');
     }
   };
 
@@ -41,20 +64,23 @@ const ChatComponent = () => {
     <div className="chat-container">
       <div className="messages">
         {messages.map((message, index) => (
-          <div key={index} className={`message ${message.incoming ? 'incoming' : 'outgoing'}`}>
+          <div
+            key={index}
+            className={`message ${message.fromUser ? 'outgoing' : 'incoming'}`}
+          >
             {message.text}
           </div>
         ))}
       </div>
-      <div className="message-input">
+      <form onSubmit={handleSubmit} className="message-input">
         <input
           type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type a message"
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
+          placeholder="Type your message..."
         />
-        <button onClick={handleSendMessage}>Send</button>
-      </div>
+        <button type="submit">Send</button>
+      </form>
     </div>
   );
 };

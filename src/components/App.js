@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LandingPage from './LandingPage';
-import ChatComponent from './ChatComponent'; // Assuming ChatComponent will be created later
+import ChatComponent from './ChatComponent';
 import '../styles/App.css'; // Adjust the path as per your project structure
 
 function App() {
