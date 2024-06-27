@@ -79,7 +79,7 @@ const ChatComponent = ({ setShowChat }) => {
         />
         <button type="submit">Send</button>
       </form>
-      <button onClick={handleEndChat}>End Chat</button>
+      <button className="end-chat-button" onClick={handleEndChat}>End Chat</button>
     </div>
   );
 };

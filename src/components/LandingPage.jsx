@@ -6,7 +6,7 @@ const LandingPage = ({ onStartChat }) => {
     <div className="landing-page">
       <div className="overlay">
         <div className="content">
-          <h1>Welcome to Our Chat App</h1>
+          <h1>Welcome to My Online Chat App</h1>
           <p>Click below to start chatting!</p>
           <button className="start-chat-button" onClick={onStartChat}>
             Start Chat
