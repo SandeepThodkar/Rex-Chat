@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+#CosmoChat UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to CosmoChat UI, a React-based web application integrated with Firebase for real-time communication and activity tracking. I have developed this project as part of my internship in Radical AI.
 
-## Available Scripts
+Features
+* Real-time Chat: Engage in instant messaging with the ChatComponent, managed via React's state hooks for seamless user interaction.
+* Firebase Notifications: Utilizes Firebase Cloud Messaging (FCM) for personalized, real-time notifications, ensuring timely updates.
+* User Interface: Features a responsive navigation bar and interactive ActivityDashboard with react-chartjs-2 for visual data representation.
 
-In the project directory, you can run:
+Challenges & Solutions
+Addressed integration challenges with Firebase Cloud Messaging by configuring service workers and managing browser permissions.
 
-### `npm start`
+Conclusion
+CosmoChat UI showcases the synergy of React and Firebase, enhancing user communication and activity tracking through modern web technologies.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Screenshots:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![Folder Structure](src/assets/images/FolderStructure.png)
 
-### `npm test`
+![Home page](src/assets/images/HomePage.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Toggle Navigation Bar](src/assets/images/ToggleNavigationBar.png)
 
-### `npm run build`
+![Chat Interface](src/assets/images/ChatInterface.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Activity Dashboard 1](src/assets/images/Dashboard1.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![Activity Dashboard 2](src/assets/images/Dashboard2.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![Activity Dashboard 3](src/assets/images/Dashboard3.png)
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For executing the project download it and run it by using npm start.
